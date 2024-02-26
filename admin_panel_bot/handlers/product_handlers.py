@@ -16,10 +16,10 @@ db = Database(DB_NAME)
 # async def product_list_handler(message: Message):
 #
 #     await message.answer(
-#         text="All products:",
+#         text="All category product",
 #         reply_markup=categories_kb_4_products()
+#
 #     )
-
 
 @product_router.message(Command('add_product'))
 async def add_product_handler(message: Message, state: FSMContext):
@@ -118,8 +118,8 @@ async def edit_product_handler(message: Message, state: FSMContext):
 
 @product_router.callback_query(ProductStates.edit_SelectCategoryProdState)
 async def edit_product_category_handler(query: CallbackQuery, state: FSMContext):
-    product = db.get_my_all_product(query.from_user.id)
-    print(product)
+    all_data = await state.get_data()
+    print(all_data)
     await state.update_data(product_category=query.data)
     await state.set_state(ProductStates.edit_TitleCategoryProdState)
     await query.message.answer('Please, send title for your edit product...')
@@ -127,7 +127,7 @@ async def edit_product_category_handler(query: CallbackQuery, state: FSMContext)
 
 @product_router.message(ProductStates.edit_TitleCategoryProdState)
 async def edit_product_title_handler(message: Message, state: FSMContext):
-    product = db.get_my_all_product(message.from_user.id)
+    product = db.update_my_last_product(message.from_user.id)
     print(product)
     if message.text:
         await state.update_data(product_title=message.text)

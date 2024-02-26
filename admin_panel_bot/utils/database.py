@@ -82,4 +82,11 @@ class Database:
         )
         return product.fetchall()
 
+    def update_my_last_product(self, u_id, new_product_title, new_product_text, new_product_image, new_product_price, new_product_phone):
+        self.cursor.execute(
+            "UPDATE products SET product_title=?, product_text=?, product_image=?, product_price=?, product_phone=? WHERE product_owner=?",
+            (new_product_title, new_product_text, new_product_image, new_product_price, new_product_phone, u_id)
+        )
+        self.conn.commit()
+
 

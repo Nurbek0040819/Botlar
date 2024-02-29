@@ -1,0 +1,5 @@
+BOT_TOKEN = '6677268438:AAEPF5SEwXPwmzaDEfRxlAkhDYe4uunVr1E'
+
+DB_NAME = 'store.db'
+
+admins = [5988569336]
